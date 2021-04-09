@@ -1,20 +1,20 @@
 import './App.css';
 import Counter from './components/Counter'
 import {changeVisibility} from './redux/actions/actions'
-import {useSelector , useDispatch} from 'react-redux'
-// import {connect} from 'react-redux'
-
-function App() {
+import {useSelector , useDispatch, connect} from 'react-redux'
 
 
-const display = useSelector (state => state.display)
-const dispatch = useDispatch()
+function App(props) {
+
+
+// const display = useSelector (state => state.display)
+// const dispatch = useDispatch()
   return (
     <div className="App">
 
-<button  onClick={()=> dispatch(changeVisibility())}>{display ? "Hide counter" : "Show counter" } </button>
+<button  onClick={()=> props.changeVisibility()}>{props.display ? "Hide counter" : "Show counter" } </button>
 
-{ display ? 
+{ props.display ? 
  <Counter/> : ""
 }
     </div>
@@ -22,24 +22,24 @@ const dispatch = useDispatch()
 }
 
 
-// const mapStateToProps = state => {
+const mapStateToProps = state => {
 
-// return {
+return {
 
-//   display: state.display
-// }
+  display: state.display
+}
 
-// }
+}
 
-// const mapStateToDispatch = dispatch => {
+const mapStateToDispatch = dispatch => {
 
-// return {
+return {
 
-// changeVisibility : () => dispatch(changeVisibility())
+changeVisibility : () => dispatch(changeVisibility())
 
-// }
+}
 
-// } 
+} 
 
 
-export default  App;
+export default  connect(mapStateToProps,mapStateToDispatch)  (App);
